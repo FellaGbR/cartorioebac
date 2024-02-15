@@ -76,7 +76,7 @@ int consultar () // Função para consultar os dados coletados
 	
 	if(file == NULL) // Se o aqruivo de dentro do file não existir.
 	{
-		printf("Usário não localizado!\n");
+		printf("Usuário não localizado!\n");
 		
 	}
 	
