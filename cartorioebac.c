@@ -13,14 +13,14 @@ int registro () // Função para cadastrar usuários
 	char sobrenome[40];
 	char cargo[40];
 	// Final da criação das variavéis / strings
-	
+	 
 	printf("Digite o CPF a ser cadastrado: "); // Perguntando ao usuário
 	scanf("%s", cpf); // Captando a resposta do usuário. Nesse caso o %s é referente a strings.
 	
 	strcpy(arquivo, cpf); // Responsável por copiar os valores das strings. Essa função copia o CPF para o arquivo (direita para a esquerda)
 	
 	FILE *file; // Cria o arquivo no banco de dados (PC)
-	file = fopen(arquivo, "w"); // Cria o arquivo e escrevendo (w)
+	file = fopen(arquivo, "w"); // Cria o arquivo e escreve (w)
 	fprintf(file,cpf); // Salvo o valor da variável
 	fclose(file); // Fecha o arquivo
 	
@@ -56,7 +56,7 @@ int registro () // Função para cadastrar usuários
 	file = fopen(arquivo, "a"); // Função que abre o file e atualiza com os dados passados abaixo (a)
 	fprintf(file, cargo); // Adicionando uma nova variável ao file para guardar as informações coletadas
 	fclose(file); // Fechando o arquivo
-	
+   
 	system("pause"); // Pausando os códigos para poder aparecer na tela
 	
 }
@@ -76,14 +76,14 @@ int consultar () // Função para consultar os dados coletados
 	
 	if(file == NULL) // Se o aqruivo de dentro do file não existir.
 	{
-		printf("Usuário não localizado!\n");
+		printf("\nUsuário não localizado!\n");
 		
 	}
 	
 	while(fgets(conteudo, 200, file) != NULL) // No while é feito um looping com as informações do arquivo e elas serão guardadas na variável conteúdo para ser exibida na tela.
 	{
 		printf("\nEssas são as informações do usuário: ");
-		printf("%s", conteudo); // Comando que aparece a informação que o usuário colocou (linha 68) na tela.
+		printf("%s", conteudo); // Comando que aparece a informação que o usuário colocou na tela.
 		printf("\n\n");
 	}
 	
@@ -105,14 +105,14 @@ int deletar ()
 	if(file == NULL) // Em caso o número digitado não esteja no arquivo.
 	{
 		fclose(file);
-		printf("O usuário não se encontra no sistema!.\n");
+		printf("\nO usuário não se encontra no sistema!.\n");
 		system("pause");
 	}
 	
 	else if(file != NULL) // Condição caso o número inserido estava no sistema e foi deletado com sucesso.
 	{
 		fclose(file);
-		printf("Usuário deletado com sucesso!.\n"); 
+		printf("\nUsuário deletado com sucesso!.\n"); 
 		system("pause");
 		remove(cpf); // Função que acessa a pasta e deleta o arquivo CPF e confere se deu certo (remove)
 	}
@@ -122,50 +122,67 @@ int deletar ()
 
 int main ()
 {
+	setlocale(LC_ALL, "Portuguese");
 	int opcao=0; // Definindo as variavéis
 	int repeticao=1; // Definindo uma variável para o operador de repetição
+	char senhadigitada[]="a"; // Variável para a senha. O "a" é que estamos atribuindo umv valor a ela.
+	int comparacao; // Variável para comparar se a senha que o usuário coloca é a correta (admin). 
 	
-	for(repeticao=1;repeticao=1;){ // Operador de repetição. As informção dentro do {} vão se repetir.
+	printf("	Cartório da EBAC   \n\n"); // Título
+	printf("Login de administrador.\n\nDigite a sua senha: "); // Perguntando a senha
+	scanf("%s", senhadigitada); // Resposta do user
 	
-		system("cls"); // Limpa a tela
-	    setlocale(LC_ALL, "Portuguese"); // Definido a linguagem
+	comparacao = strcmp(senhadigitada, "admin"); // Comparação entre as strings. Os valores colocados pelo user, ficam alocados na memória. A "senhadigitada" fica com o mesmo valor de "admin".
 	
-        printf("   Cartório da EBAC   \n\n"); // Início do menu
-	    printf("Escolha a Opção Desejada do Menu:\n\n");
-	    printf("\t1 - Registrar Nomes\n");
-	    printf("\t2 - Consultar Nomes\n");
-	    printf("\t3 - Deletar Nomes\n"); 
-	    printf("\t4 - Sair do sistema\n\n");
-	    printf("Opção: "); // Fim do menu
-
-        scanf("%d", &opcao); // Armazenando a escolha do usuário
-    
-        system("cls"); // Limpa a tela
+	if(comparacao == 0) // Esse 0 é caso a comparação seja igual ao valor da senhadigitada (admin). Se fosse um valor diferente, daria erro, ele salvaria um valor diferente na memória.
+	{
+	
+		for(repeticao=1;repeticao=1;) // Operador de repetição. As informção dentro do {} vão se repetir.
+		{ 
+	
+			system("cls"); // Limpa a tela
+		    setlocale(LC_ALL, "Portuguese"); // Definido a linguagem
+		
+	        printf("   Cartório da EBAC   \n\n"); // Início do menu
+		    printf("Escolha a Opção Desejada do Menu:\n\n");
+		    printf("\t1 - Registrar Nomes\n");
+		    printf("\t2 - Consultar Nomes\n");
+		    printf("\t3 - Deletar Nomes\n"); 
+		    printf("\t4 - Sair do sistema\n\n");
+		    printf("Opção: "); // Fim do menu
+	
+	        scanf("%d", &opcao); // Armazenando a escolha do usuário
+	    
+	        system("cls"); // Limpa a tela
         
-        switch(opcao){ // Início da seleção no menu
-           	case 1:	
-            registro(); // Chamando a função
-            break;
-            
-            case 2:
-            consultar(); // Chamando a função
-	        break;
+	        switch(opcao) // Início da seleção no menu
+			{ 
+	           	case 1:	
+	            registro(); // Chamando a função
+	            break;
 	            
-	        case 3:
-	        deletar(); // Chamando a função
-            break;
-            
-            case 4:
-            printf("Obrigado por utilizar o sistema!\n");
-            return 0;
-            break;
-        
-            default: // Caso não seja colocado nenhuma das funções acima, as intruções abaixo aparecem.
-            printf("Essa opção não está disponível!\n");
-    	    system("pause");
-    	    break; // Fim da seleção
+	            case 2:
+	            consultar(); // Chamando a função
+		        break;
+		            
+		        case 3:
+		        deletar(); // Chamando a função
+	            break;
+	            
+	            case 4:
+	            printf("Obrigado por utilizar o sistema!\n"); 
+	            return 0; // Retorna o valor 0, quebra todas as funções e sai do sistema.
+	            break;
+	        
+	            default: // Caso não seja colocado nenhuma das funções acima, as intruções abaixo aparecem.
+	            printf("Essa opção não está disponível!\n");
+	    	    system("pause");
+	    	    break; // Fim da seleção
 			}
-	
-				}	
+		
+		}	
+	}	
+	else // Caso o valor seja colocado errado (!= admin), dará erro.
+		printf("\nSenha incorreta.");
 	
 }
